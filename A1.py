@@ -7,7 +7,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # ================= CONFIG =================
-ALIAS2_URL = "https://alias2.onrender.com/ping"
+A2_URL = "https://a2-xewy.onrender.com/ping"
 
 OTHER_SERVICES = [
     "https://medilink-backend-24jm.onrender.com",
@@ -18,29 +18,29 @@ PING_INTERVAL = 4 * 60  # 4 minutes
 
 @app.route("/")
 def home():
-    return "Alias1 is running"
+    return "A1 is running"
 
 
 @app.route("/ping")
 def ping():
     print_log("Received ping")
-    return "pong from alias1"
+    return "pong from A1"
 
 
 def print_log(message):
-    print(f"[{datetime.now()}] alias1 | {message}", flush=True)
+    print(f"[{datetime.now()}] A1 | {message}", flush=True)
 
 
 def ping_services():
     while True:
         print_log("I am alive")
 
-        # Ping alias2
+        # Ping A2
         try:
-            requests.get(ALIAS2_URL, timeout=10)
-            print_log("I called: alias2")
+            requests.get(A2_URL, timeout=10)
+            print_log("I called: A2")
         except Exception as e:
-            print_log(f"alias2 failed: {e}")
+            print_log(f"A2 failed: {e}")
 
         # Ping other services
         for url in OTHER_SERVICES:
@@ -56,3 +56,4 @@ def ping_services():
 if __name__ == "__main__":
     threading.Thread(target=ping_services, daemon=True).start()
     app.run(host="0.0.0.0", port=10000)
+
